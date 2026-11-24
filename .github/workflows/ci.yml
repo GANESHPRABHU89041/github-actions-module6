@@ -1,0 +1,45 @@
+
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Display repository details
+      - name: Display Repository Details
+        run: |
+          echo "Repository Details"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "Commit: $GITHUB_SHA"
+
+      # Step 3: List repository files
+      - name: List Repository Files
+        run: |
+          echo "Listing repository files"
+          ls -la
+          echo "Listing all project files"
+          find . -type f
+
+      # Step 4: Verify required project files
+      - name: Verify Required Files
+        run: |
+          test -f README.md
+          test -f index.html
+          test -f .gitignore
+          test -f .github/workflows/ci.yml
+          echo "All required files exist!"
+
+      # Step 5: Display success message
+      - name: Success Message
+        run: echo "CI Pipeline executed successfully!"
